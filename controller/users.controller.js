@@ -2,13 +2,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongodb = require("mongodb");
 const crypto = require("crypto");
-const { connectDB, closeConnection } = require("../db/connection");
+const { connectDb, closeConnection } = require("../db/connection");
 // const { passwordResetEmail } = require("../lib/sendEmail");
 
 /*User Registration*/
 let userRegister = async (req, res) => {
   try {
-    const db = await connectDB();
+    const db = await connectDb();
     const userEmail = await db
       .collection("users")
       .findOne({ email: req.body.email });
@@ -38,7 +38,7 @@ let userRegister = async (req, res) => {
 /*All User*/
 let allUsers = async (req, res) => {
   try {
-    let db = await connectDB();
+    let db = await connectDb();
     let userData = await db.collection("users").find().toArray();
     if (!userData || userData.length == 0) {
       res.status(404).json({ message: "No User Data Found !" });
@@ -56,7 +56,7 @@ let allUsers = async (req, res) => {
 /*User Login*/
 let userLogin = async (req, res) => {
   try {
-    const db = await connectDB();
+    const db = await connectDb();
     const userEmail = await db
       .collection("users")
       .findOne({ email: req.body.email });
@@ -92,7 +92,7 @@ let userLogin = async (req, res) => {
 /*User Forgot Password*/
 let forgotPassword = async (req, res) => {
   try {
-    const db = await connectDB();
+    const db = await connectDb();
     const userEmail = await db
       .collection("users")
       .findOne({ email: req.body.email });
@@ -141,7 +141,7 @@ let forgotPassword = async (req, res) => {
 /*User Reset Password*/
 let resetPassword = async (req, res) => {
   try {
-    const db = await connectDB();
+    const db = await connectDb();
     let resetToken = await db
       .collection("token")
       .findOne({ userId: new mongodb.ObjectId(req.body.userId) });

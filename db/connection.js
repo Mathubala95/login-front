@@ -1,19 +1,22 @@
-const mongodb = require("mongodb");
-const mongoClient = mongodb.MongoClient;
+var mongodb = require("mongodb");
+var mongoClient = mongodb.MongoClient;
+const URL = process.env.DB;
 let connection;
 let db;
 
-// DB Connection
-let connectDB = async () => {
-    let connection = await mongoClient.connect(process.env.DB);
-    let db = connection.db("login");
-    return db;
+async function connectDb () {
+   connection = await mongoClient.connect(URL);
+
+   db = connection.db("my-paytm");
+  return db;
 }
 
-let closeConnection = async () => {
-    if(connection){
-        await connection.close();
-    }
+async function closeConnection() {                                                          
+  if(connection){
+    await connection.close()
+  } else {
+    console.log("No Connection");
+  }
 }
 
-module.exports = {connectDB, closeConnection, connection, db}
+module.exports = { connectDb, connection , db, closeConnection };
