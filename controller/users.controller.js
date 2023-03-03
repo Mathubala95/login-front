@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const mongodb = require("mongodb");
 const crypto = require("crypto");
 const { connectDb, closeConnection } = require("../db/connection");
-// const { passwordResetEmail } = require("../lib/sendEmail");
+
 
 /*User Registration*/
 let userRegister = async (req, res) => {
